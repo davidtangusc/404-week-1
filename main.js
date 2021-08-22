@@ -30,18 +30,14 @@ $("#repos-link").on("click", function () {
   });
 
   promise.then((repos) => {
-    let html = "<ul>";
+    let ul = document.createElement("ul");
 
-    // less vulnerable to Cross-site Scripting (XSS) attacks
     repos.forEach((repo) => {
-      html += `<li>
-        ${repo.name} - ${repo.description}
-      </li>`;
+      let li = document.createElement("li");
+      li.textContent = `${repo.name} - ${repo.description}`;
+      ul.append(li);
     });
 
-    html += "</ul>";
-
-    let sanitizedHtml = DOMPurify.sanitize(html);
-    $("#results").html(sanitizedHtml);
+    $("#results").html(ul);
   });
 });

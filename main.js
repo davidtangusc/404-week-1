@@ -9,7 +9,7 @@ $("#members-link").on("click", function () {
   promise.then((members) => {
     let html = "";
 
-    // vulnerable to Cross-site Scripting (XSS) attacks
+    // less vulnerable to Cross-site Scripting (XSS) attacks
     members.forEach((member) => {
       html += `
         <img
@@ -19,7 +19,8 @@ $("#members-link").on("click", function () {
       `;
     });
 
-    $("#results").html(html);
+    let sanitizedHtml = DOMPurify.sanitize(html);
+    $("#results").html(sanitizedHtml);
   });
 });
 
@@ -34,7 +35,7 @@ $("#repos-link").on("click", function () {
   promise.then((repos) => {
     let html = "<ul>";
 
-    // vulnerable to Cross-site Scripting (XSS) attacks
+    // less vulnerable to Cross-site Scripting (XSS) attacks
     repos.forEach((repo) => {
       html += `<li>
         ${repo.name} - ${repo.description}
@@ -43,6 +44,7 @@ $("#repos-link").on("click", function () {
 
     html += "</ul>";
 
-    $("#results").html(html);
+    let sanitizedHtml = DOMPurify.sanitize(html);
+    $("#results").html(sanitizedHtml);
   });
 });
